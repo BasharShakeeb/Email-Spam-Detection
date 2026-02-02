@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpamGuard AI | Advanced Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --spam-color: #ff6b6b;
+            --ham-color: #2ecc71;
+            --messages-bg: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f2027;
+            background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #4ca1af);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .glass-container {
+            width: 450px;
+            height: 85vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header span {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            font-weight: 300;
+        }
+
+        .chat-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        .chat-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-bottom-left-radius: 2px;
+        }
+
+        .bot-message.spam {
+            border-left: 5px solid var(--spam-color);
+            background: #fff5f5;
+            color: #c0392b;
+        }
+
+        .bot-message.ham {
+            border-left: 5px solid var(--ham-color);
+            background: #f0fdf4;
+            color: #27ae60;
+        }
+
+        .input-area {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        input {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(118, 75, 162, 0.4);
+        }
+
+        button {
+            padding: 0 24px;
+            border: none;
+            border-radius: 12px;
+            background: white;
+            color: #764ba2;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 12px;
+            border-bottom-left-radius: 2px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #888;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+            margin: 0 2px;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .glass-container {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glass-container">
+        <div class="header">
+            <h1>🛡️ SpamGuard AI</h1>
+            <span>Powered by Machine Learning</span>
+        </div>
+
+        <div class="chat-area" id="chatBox">
+            <div class="message bot-message">
+                Hi there! 👋<br>I'm your AI security assistant. Send me any text message, and I'll analyze if it's safe
+                or spam.
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your message here..." autocomplete="off">
+            <button id="sendBtn" onclick="handleSend()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('userInput');
+        const chatBox = document.getElementById('chatBox');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const sendBtn = document.getElementById('sendBtn');
+
+        input.focus();
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+
+        async function handleSend() {
+            const text = input.value.trim();
+            if (!text) return;
+
+            // 1. Add User Message
+            appendMessage(text, 'user-message');
+            input.value = '';
+            input.disabled = true;
+
+            // 2. Show Typing Indicator
+            showTyping(true);
+            scrollToBottom();
+
+            // Simulate network delay for better UX (feels more "AI thinking")
+            const minDelay = new Promise(resolve => setTimeout(resolve, 800));
+
+            try {
+                const apiCall = fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+
+                // Wait for both minimum delay and API call
+                const [response] = await Promise.all([apiCall, minDelay]);
+                const data = await response.json();
+
+                showTyping(false);
+
+                if (data.error) {
+                    appendMessage("⚠️ " + data.error, 'bot-message');
+                } else {
+                    const isSpam = data.prediction === "Spam";
+                    const typeClass = isSpam ? 'spam' : 'ham';
+                    const icon = isSpam ? '🚫' : '✅';
+
+                    const resultHTML = `
+                    <div style="font-weight:600; margin-bottom:4px;">${icon} Analysis Complete</div>
+                    <div>${data.message}</div>
+                    <div style="margin-top:8px; font-size:0.85em; opacity:0.8; padding-top:4px; border-top:1px solid rgba(0,0,0,0.1)">
+                        Verdict: <strong>${data.prediction}</strong>
+                    </div>
+                `;
+                    appendMessage(resultHTML, `bot-message ${typeClass}`, true);
+                }
+
+            } catch (error) {
+                showTyping(false);
+                appendMessage("❌ Connection Failed. ensuring the server is running.", 'bot-message');
+            } finally {
+                input.disabled = false;
+                input.focus();
+                scrollToBottom();
+            }
+        }
+
+        function appendMessage(content, className, isHTML = false) {
+            const div = document.createElement('div');
+            div.className = `message ${className}`;
+
+            if (isHTML) {
+                div.innerHTML = content;
+            } else {
+                div.textContent = content;
+            }
+
+            // Insert before typing indicator
+            chatBox.insertBefore(div, typingIndicator);
+        }
+
+        function showTyping(show) {
+            typingIndicator.style.display = show ? 'block' : 'none';
+            if (show) scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+
+</body>
+
+</html>

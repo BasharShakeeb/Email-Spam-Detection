@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpamGuard AI | Enterprise Edition</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="glass-container">
+        <div class="header">
+            <h1>🛡️ SpamGuard AI</h1>
+            <span>Enterprise Machine Learning Solution</span>
+        </div>
+
+        <div class="chat-area" id="chatBox">
+            <div class="message bot-message">
+                Hi there! <br>I'm your AI security assistant. Send me any text message, and I'll analyze if it's safe
+                or spam.
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your message here..." autocomplete="off">
+            <button id="sendBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
