@@ -8,3 +8,15 @@ wheels/
 
 # Virtual environments
 .venv
+venv
+.venv/
+venv/
+.env
+.env/
+python cache
+__pycache__
+*.pyc
+*.pyo
+uv.lock
+uv/
+uv-cache__/
