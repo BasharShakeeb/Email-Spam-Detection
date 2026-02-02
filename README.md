@@ -97,4 +97,4 @@ Email Spam Detection/
 
 ## 👨‍💻 Author
 
-Developed with ❤️ by **Bashar Shakeeb**.
+Developed with  by **Bashar Shakeeb**.
