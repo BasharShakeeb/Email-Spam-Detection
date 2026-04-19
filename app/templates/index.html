@@ -4,47 +4,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpamGuard AI | Enterprise Edition</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    <title>SpamGuard AI | Email Spam Detection System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
-    <div class="glass-container">
-        <div class="header">
-            <h1>🛡️ SpamGuard AI</h1>
-            <span>Enterprise Machine Learning Solution</span>
-        </div>
-
-        <div class="chat-area" id="chatBox">
-            <div class="message bot-message">
-                Hi there! <br>I'm your AI security assistant. Send me any text message, and I'll analyze if it's safe
-                or spam.
-            </div>
-
-            <div class="typing-indicator" id="typingIndicator">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-
-        <div class="input-area">
-            <input type="text" id="userInput" placeholder="Type your message here..." autocomplete="off">
-            <button id="sendBtn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
-            </button>
+                <span>SpamGuard AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#analyzer" class="nav-link">Analyzer</a>
+                <a href="#batch" class="nav-link">Batch Processing</a>
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="#guide" class="nav-link">How to Use</a>
+            </div>
         </div>
-    </div>
+    </nav>
 
-    <!-- Custom JS -->
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                <span>Powered by Machine Learning</span>
+            </div>
+            <h1>Spam Email Detection System</h1>
+            <p class="hero-subtitle">Advanced AI-powered email classification system that uses machine learning algorithms to detect and filter spam messages with high accuracy in real-time.</p>
+        </div>
+    </section>
+
+    <!-- Quick Stats Section -->
+    <section class="quick-stats-section">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <h3 id="totalPredictions">0</h3>
+                <p>Total Analyzed</p>
+            </div>
+            <div class="stat-card spam-stat">
+                <div class="stat-icon">🚫</div>
+                <h3 id="spamCount">0</h3>
+                <p>Spam Detected</p>
+            </div>
+            <div class="stat-card ham-stat">
+                <div class="stat-icon">✅</div>
+                <h3 id="hamCount">0</h3>
+                <p>Not Spam</p>
+            </div>
+            <div class="stat-card rate-stat">
+                <div class="stat-icon">📈</div>
+                <h3 id="spamRate">0%</h3>
+                <p>Spam Rate</p>
+            </div>
+        </div>
+        <a href="/dashboard" class="view-dashboard-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            View Full Dashboard
+        </a>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Single Message Analyzer -->
+        <section id="analyzer" class="analyzer-section">
+            <div class="section-header">
+                <h2>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    Message Analyzer
+                </h2>
+                <p>Enter email content below to analyze for spam</p>
+            </div>
+
+            <div class="analyzer-card">
+                <div class="input-group">
+                    <textarea id="messageInput" placeholder="Enter email or message content to analyze..." rows="8"></textarea>
+                    <div class="input-footer">
+                        <span class="char-count"><span id="charCount">0</span> characters</span>
+                        <button id="clearBtn" class="btn-secondary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                            </svg>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+
+                <button id="analyzeBtn" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    Analyze Message
+                </button>
+
+                <!-- Result Display -->
+                <div id="resultContainer" class="result-container hidden">
+                    <div class="result-card" id="resultCard">
+                        <div class="result-header">
+                            <div class="result-icon" id="resultIcon">
+                                <!-- Icon injected by JS -->
+                            </div>
+                            <div class="result-title">
+                                <h3 id="resultTitle">Analysis Complete</h3>
+                                <p id="resultSubtitle">Processing finished</p>
+                            </div>
+                        </div>
+                        <div class="result-body">
+                            <div class="result-label" id="resultLabel">SPAM DETECTED</div>
+                            <div class="confidence-meter">
+                                <div class="meter-header">
+                                    <span>Confidence Score</span>
+                                    <span id="confidenceValue">95%</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" id="confidenceFill"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingState" class="loading-state hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing message with AI model...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Batch Processing Section -->
+        <section id="batch" class="batch-section">
+            <div class="section-header">
+                <h2>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    Batch Processing
+                </h2>
+                <p>Upload a file to analyze multiple emails at once</p>
+            </div>
+
+            <div class="upload-card">
+                <div class="upload-zone" id="uploadZone">
+                    <input type="file" id="fileInput" accept=".csv,.txt" class="hidden">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <h3>Drop your file here or click to browse</h3>
+                    <p>Supported formats: CSV, TXT (one message per line)</p>
+                    <div class="upload-instructions">
+                        <h4>File Format Guidelines:</h4>
+                        <ul>
+                            <li><strong>CSV files:</strong> Should contain a "text" or "message" column</li>
+                            <li><strong>TXT files:</strong> One email/message per line</li>
+                            <li>Maximum file size: 10MB</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="filePreview" class="file-preview hidden">
+                    <div class="file-info">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                        <div>
+                            <h4 id="fileName">filename.csv</h4>
+                            <p id="fileSize">2.5 MB</p>
+                        </div>
+                    </div>
+                    <button id="removeFileBtn" class="btn-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <button id="batchAnalyzeBtn" class="btn-primary hidden" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    Process All Messages
+                </button>
+
+                <div id="batchResult" class="batch-result hidden">
+                    <!-- Results populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Use Guide -->
+        <section id="guide" class="guide-section">
+            <div class="section-header">
+                <h2>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    How to Use
+                </h2>
+                <p>Quick guide to get started with spam detection</p>
+            </div>
+
+            <div class="guide-grid">
+                <div class="guide-card">
+                    <div class="guide-number">1</div>
+                    <h3>Input Your Message</h3>
+                    <p>Enter the email or message content you want to analyze in the text area above, or upload a file for batch processing.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-number">2</div>
+                    <h3>Click Analyze</h3>
+                    <p>Press the "Analyze Message" button to process your input through our machine learning model.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-number">3</div>
+                    <h3>View Results</h3>
+                    <p>Instantly see if the message is classified as spam or not spam, along with the model's confidence score.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 SpamGuard AI. Built with Machine Learning & Flask.</p>
+        </div>
+    </footer>
+
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
 </body>
 
 </html>

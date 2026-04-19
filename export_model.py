@@ -40,11 +40,17 @@ model = MultinomialNB()
 model.fit(X_train_tfidf, y_train)
 
 # Save Model and Vectorizer
-print("Saving model.pkl and vectorizer.pkl...")
-with open('model.pkl', 'wb') as f:
+# Save Model and Vectorizer
+import os
+
+if not os.path.exists('models'):
+    os.makedirs('models')
+
+print("Saving model.pkl and vectorizer.pkl to 'models' directory...")
+with open('models/model.pkl', 'wb') as f:
     pickle.dump(model, f)
 
-with open('vectorizer.pkl', 'wb') as f:
+with open('models/vectorizer.pkl', 'wb') as f:
     pickle.dump(vectorizer, f)
 
 print("Done! Files are ready.")

@@ -26,25 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let selectedFile = null;
 
-    // ==================== LOAD QUICK STATS ====================
-    loadQuickStats();
-
-    async function loadQuickStats() {
-        try {
-            const response = await fetch('/api/stats');
-            const stats = await response.json();
-            
-            if (stats.total_predictions > 0) {
-                document.getElementById('totalPredictions').textContent = stats.total_predictions;
-                document.getElementById('spamCount').textContent = stats.spam_count;
-                document.getElementById('hamCount').textContent = stats.ham_count;
-                document.getElementById('spamRate').textContent = stats.spam_percentage + '%';
-            }
-        } catch (error) {
-            console.error('Error loading stats:', error);
-        }
-    }
-
     // ==================== CHARACTER COUNTER ====================
     messageInput.addEventListener('input', () => {
         charCount.textContent = messageInput.value.length;

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | SpamGuard AI Analytics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>SpamGuard AI</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Back to Analyzer</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <section class="dashboard-header">
+        <div class="header-content">
+            <h1>📊 Analytics Dashboard</h1>
+            <p>Real-time insights into spam detection activity</p>
+        </div>
+    </section>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard-content">
+        
+        <!-- Stats Overview -->
+        <section class="stats-overview">
+            <div class="stat-card large">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <h3 id="totalPredictions">0</h3>
+                    <p>Total Predictions</p>
+                </div>
+            </div>
+            <div class="stat-card large spam">
+                <div class="stat-icon">🚫</div>
+                <div class="stat-info">
+                    <h3 id="spamCount">0</h3>
+                    <p>Spam Detected</p>
+                </div>
+            </div>
+            <div class="stat-card large ham">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <h3 id="hamCount">0</h3>
+                    <p>Not Spam</p>
+                </div>
+            </div>
+            <div class="stat-card large rate">
+                <div class="stat-icon">📈</div>
+                <div class="stat-info">
+                    <h3 id="spamRate">0%</h3>
+                    <p>Spam Rate</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Grid -->
+        <section class="charts-grid">
+            
+            <!-- Distribution Pie Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Spam vs Ham Distribution</h3>
+                    <span class="chart-badge">Live</span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Predictions Over Time -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Predictions Over Time</h3>
+                    <span class="chart-badge">24h</span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="timeSeriesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Hourly Activity -->
+            <div class="chart-card full-width">
+                <div class="chart-header">
+                    <h3>Hourly Activity Pattern</h3>
+                    <span class="chart-badge">Analysis</span>
+                </div>
+                <div class="chart-container large">
+                    <canvas id="hourlyChart"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Recent Predictions Table -->
+        <section class="recent-predictions">
+            <div class="section-header">
+                <h2>Recent Predictions</h2>
+                <p>Last 10 analyzed messages</p>
+            </div>
+            <div class="table-container">
+                <table class="predictions-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Message Preview</th>
+                            <th>Prediction</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="predictionsTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+
+</html>

@@ -6,7 +6,7 @@ A professional, production-ready web application for detecting spam messages usi
 ![Python](https://img.shields.io/badge/python-3.11+-blue)
 ![Flask](https://img.shields.io/badge/flask-2.0+-green)
 
-## 📖 Overview
+##  Overview
 
 This project demonstrates how to deploy a Machine Learning model into a real-world web application. It features a robust backend architecture using **Flask Blueprints** and a modern, responsive frontend using **Glassmorphism** design principles.
 
@@ -43,7 +43,7 @@ Email Spam Detection/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Python 3.8 or higher.
@@ -74,7 +74,7 @@ Email Spam Detection/
 
 ---
 
-## 🧠 How It Works
+##  How It Works
 
 1. **Frontend**: The user enters a message. JavaScript sends an async `POST` request to `/predict`.
 2. **Backend (Flask)**:
@@ -86,7 +86,7 @@ Email Spam Detection/
 
 ---
 
-## 🛠️ Future Improvements
+##  Future Improvements
 
 - **Database Integration**: Save flagged queries for future re-training.
 - **User Feedback**: Allow users to mark false positives/negatives.
@@ -95,6 +95,6 @@ Email Spam Detection/
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
-Developed with ❤️ by **Bashar Shakeeb**.
+Developed with  by **Bashar Shakeeb**.

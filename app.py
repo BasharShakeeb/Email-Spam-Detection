@@ -7,9 +7,9 @@ app = Flask(__name__)
 # Load Model and Vectorizer
 print("Loading model and vectorizer...")
 try:
-    with open('model.pkl', 'rb') as f:
+    with open('models/model.pkl', 'rb') as f:
         model = pickle.load(f)
-    with open('vectorizer.pkl', 'rb') as f:
+    with open('models/vectorizer.pkl', 'rb') as f:
         vectorizer = pickle.load(f)
     print("Model loaded successfully!")
 except FileNotFoundError:
