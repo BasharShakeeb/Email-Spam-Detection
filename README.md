@@ -16,7 +16,7 @@ This project demonstrates how to deploy a Machine Learning model into a real-wor
 - **Clean Architecture**: Separation of concerns (Services, Controllers, Utils).
 - **Scalable**: Built using Flask Blueprints and Singleton pattern for model loading.
 
-### 📸 App Screenshots
+###  App Screenshots
 
 | Spam Detection Result | Ham Detection Result |
 | :---: | :---: |
